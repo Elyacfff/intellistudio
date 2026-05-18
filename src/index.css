@@ -1,0 +1,196 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* 完美字体系统 - 完美支持汉语和维语
+*/
+:root {
+  /* 优先使用广域字体，确保完美显示 */
+  font-family: 
+    'Segoe UI',
+    'Microsoft YaHei',
+    'PingFang SC',
+    'Noto Sans SC',
+    'Noto Sans Arabic',
+    'Helvetica Neue',
+    Arial,
+    system-ui,
+    sans-serif;
+  
+  font-size: 15px;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-weight: 400;
+  text-rendering: optimizeLegibility;
+}
+
+html, body, #root {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  user-select: text;
+  /* 确保文字清晰锐利，防止模糊 */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: geometricPrecision;
+  /* 强制使用字体抗锯齿 */
+  font-smoothing: antialiased;
+}
+
+/* 确保所有文本元素都使用正确的字体 */
+p, div, span, a, button, input, textarea, select, option, h1, h2, h3, h4, h5, h6 {
+  font-family: inherit;
+}
+
+/* 优化玻璃效果 */
+.glass-card {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+/* 优化滚动条样式 */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(100, 116, 139, 0.4);
+  border-radius: 5px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(100, 116, 139, 0.7);
+}
+
+::-webkit-scrollbar-thumb:active {
+  background: rgba(100, 116, 139, 0.9);
+}
+
+/* 拖拽区域 */
+.drag-region {
+  -webkit-app-region: drag;
+}
+
+.no-drag {
+  -webkit-app-region: no-drag;
+}
+
+/* RTL 完美支持 - 专门为维语优化 */
+[dir="rtl"] {
+  direction: rtl;
+  text-align: right;
+  /* 维语专门字体，优先使用阿拉伯语/维语专用字体 */
+  font-family: 
+    'Noto Sans Arabic',
+    'Segoe UI',
+    'Microsoft YaHei',
+    'PingFang SC',
+    'Noto Sans SC',
+    'Arial',
+    system-ui,
+    sans-serif;
+}
+
+/* 维语文字特殊优化 - 确保连写和正确显示 */
+[dir="rtl"] * {
+  font-feature-settings: 'calt' 1, 'liga' 1;
+  -webkit-font-feature-settings: 'calt' 1, 'liga' 1;
+  text-rendering: optimizeLegibility;
+}
+
+/* 优化文字选择 */
+::selection {
+  background: rgba(59, 130, 246, 0.4);
+  color: white;
+}
+
+/* 优化输入框和文本域显示 */
+input, textarea, select, option {
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  color: inherit;
+}
+
+/* 优化动画效果 */
+@keyframes flow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.gradient-flow {
+  background-size: 200% 200%;
+  animation: flow 120s ease infinite;
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 20px rgba(59, 130, 246, 0.3); }
+  50% { box-shadow: 0 0 40px rgba(59, 130, 246, 0.6); }
+}
+
+.pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+/* 优化按钮和交互元素 */
+button {
+  font-family: inherit;
+  font-weight: 500;
+  transition: all 0.15s ease;
+}
+
+/* 优化文字阴影优化 */
+.text-shadow {
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+/* 优化标题字体粗细 */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 600;
+}
+
+/* 优化占位符文字 */
+::placeholder {
+  color: rgba(148, 163, 184, 0.7);
+}
+
+/* 确保文字最小可辨识大小 */
+.text-xs {
+  font-size: 0.75rem;
+  line-height: 1.25;
+}
+
+.text-sm {
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+.text-base {
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+/* 优化表格文字对齐 */
+table {
+  font-family: inherit;
+}
