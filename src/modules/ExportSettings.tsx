@@ -179,7 +179,7 @@ const ExportSettings: React.FC = () => {
                 视频设置
               </h3>
               <div className="p-4 rounded-xl space-y-4" style={{ backgroundColor: colors.card, border: `1px solid ${colors.border}` }}>
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <label className="text-xs font-medium mb-1.5 block" style={{ color: colors.muted }}>分辨率</label>
                     <select
@@ -211,7 +211,7 @@ const ExportSettings: React.FC = () => {
                   </div>
                 </div>
                 
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <label className="text-xs font-medium mb-1.5 block" style={{ color: colors.muted }}>
                       视频质量: {quality}%

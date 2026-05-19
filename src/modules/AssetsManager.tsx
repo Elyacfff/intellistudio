@@ -167,7 +167,7 @@ const AssetsManager: React.FC = () => {
         {/* 右侧内容 */}
         <div className="flex-1 flex flex-col overflow-hidden p-4">
           {viewMode === 'grid' ? (
-            <div className="grid grid-cols-4 gap-4 overflow-y-auto">
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 overflow-y-auto">
               {filteredAssets.map((asset) => (
                 <motion.div
                   key={asset.id}

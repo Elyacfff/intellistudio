@@ -7,6 +7,7 @@ import { useAppStore } from './store/appStore';
 import { changeLanguage } from './i18n';
 import TitleBar from './components/TitleBar';
 import Sidebar from './components/Sidebar';
+import BottomNav from './components/BottomNav';
 import DynamicBackground from './components/DynamicBackground';
 import Toast from './components/Toast';
 import SearchModal from './components/SearchModal';
@@ -20,17 +21,28 @@ import VoiceCloning from './modules/VoiceCloning';
 import SubtitleEditor from './modules/SubtitleEditor';
 import ExportSettings from './modules/ExportSettings';
 import Settings from './modules/Settings';
+import AIModelConfig from './modules/AIModelConfig';
+import LoginPage from './modules/LoginPage';
+import MembershipPage from './modules/MembershipPage';
+import ComparisonPage from './modules/ComparisonPage';
+import OnboardingGuide from './modules/OnboardingGuide';
+import { useModelStore } from './store/modelStore';
+import { useAuthStore } from './store/authStore';
 import './index.css';
 
 const App: React.FC = () => {
   const { theme, language, currentModule, windowOpacity } = useAppStore();
+  const syncToManager = useModelStore((s) => s.syncToManager);
   
   useTheme(theme);
   useKeyboardShortcuts();
   
-  // 初始化语言
   useEffect(() => {
     changeLanguage(language);
+  }, [language]);
+
+  useEffect(() => {
+    syncToManager();
   }, []);
 
   const renderModule = () => {
@@ -55,6 +67,16 @@ const App: React.FC = () => {
         return <ExportSettings />;
       case 'settings':
         return <Settings />;
+      case 'ai-config':
+        return <AIModelConfig />;
+      case 'login':
+        return <LoginPage />;
+      case 'membership':
+        return <MembershipPage />;
+      case 'comparison':
+        return <ComparisonPage />;
+      case 'onboarding':
+        return <OnboardingGuide />;
       default:
         return <Dashboard />;
     }
@@ -79,15 +101,20 @@ const App: React.FC = () => {
         <TitleBar />
         
         {/* 主内容区 */}
-        <div className="flex-1 flex overflow-hidden relative">
+        <div className="flex-1 flex overflow-hidden relative pb-16 md:pb-0">
           {/* 侧边栏 */}
-          <Sidebar />
+          <div className="desktop-sidebar">
+            <Sidebar />
+          </div>
           
           {/* 内容区域 */}
           <div className="flex-1 overflow-hidden relative">
             {renderModule()}
           </div>
         </div>
+        
+        {/* 底部导航 - 仅移动端显示 */}
+        <BottomNav />
       </div>
     </I18nextProvider>
   );

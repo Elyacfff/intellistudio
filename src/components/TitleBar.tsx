@@ -22,7 +22,7 @@ const TitleBar: React.FC = () => {
 
   return (
     <div 
-      className="drag-region flex items-center justify-between px-4 h-9 border-b"
+      className="drag-region flex items-center justify-between px-4 h-9 border-b mobile-titlebar"
       style={{ 
         backgroundColor: colors.card,
         borderColor: colors.border
@@ -38,7 +38,7 @@ const TitleBar: React.FC = () => {
         </span>
       </div>
 
-      <div className="flex items-center gap-2 no-drag">
+      <div className="flex items-center gap-2 no-drag titlebar-controls">
         <button
           onClick={handleMinimize}
           className="w-8 h-8 flex items-center justify-center rounded hover:opacity-70 transition-opacity"

@@ -195,7 +195,7 @@ const VideoGenerator: React.FC = () => {
             {/* 视频时长 */}
             <div>
               <label className="text-xs font-medium mb-2 block" style={{ color: colors.muted }}>视频时长</label>
-              <div className="grid grid-cols-4 gap-2">
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
                 {['4s', '8s', '12s', '16s'].map((d) => (
                   <button
                     key={d}
@@ -232,7 +232,7 @@ const VideoGenerator: React.FC = () => {
             {/* 宽高比 */}
             <div>
               <label className="text-xs font-medium mb-2 block" style={{ color: colors.muted }}>宽高比</label>
-              <div className="grid grid-cols-3 gap-2">
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
                 {[
                   { ratio: '9:16', label: '竖屏' },
                   { ratio: '16:9', label: '横屏' },
@@ -285,7 +285,7 @@ const VideoGenerator: React.FC = () => {
                   添加
                 </button>
               </div>
-              <div className="grid grid-cols-3 gap-2">
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
                 {referenceImages.map((_, idx) => (
                   <div
                     key={idx}

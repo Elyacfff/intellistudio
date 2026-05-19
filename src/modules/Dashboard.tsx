@@ -47,13 +47,13 @@ const Dashboard: React.FC = () => {
   return (
     <div className="h-full flex flex-col overflow-hidden" style={{ color: colors.title }}>
       {/* 顶部标题 */}
-      <div className="flex items-center justify-between px-6 py-4 border-b" style={{ backgroundColor: colors.card, borderColor: colors.border }}>
+      <div className="flex items-center justify-between px-4 py-3 md:px-6 md:py-4 border-b flex-wrap gap-2" style={{ backgroundColor: colors.card, borderColor: colors.border }}>
         <div>
-          <h1 className="text-2xl font-bold flex items-center gap-2">
+          <h1 className="text-xl md:text-2xl font-bold flex items-center gap-2">
             <Sparkles size={24} style={{ color: colors.primary }} />
             欢迎回来！
           </h1>
-          <p className="text-sm mt-1" style={{ color: colors.muted }}>今天你想创作什么样的短剧呢？</p>
+          <p className="text-xs md:text-sm mt-1 hide-on-mobile" style={{ color: colors.muted }}>今天你想创作什么样的短剧呢？</p>
         </div>
         
         <button
@@ -67,16 +67,16 @@ const Dashboard: React.FC = () => {
       </div>
 
       {/* 主要内容 */}
-      <div className="flex-1 overflow-y-auto p-6">
-        <div className="max-w-7xl mx-auto space-y-8">
+      <div className="flex-1 overflow-y-auto p-4 md:p-6 pb-20 md:pb-6">
+        <div className="content-max-width mx-auto space-y-6 md:space-y-8" style={{ maxWidth: '1400px' }}>
           
           {/* 快速开始 */}
           <section>
-            <h2 className="text-lg font-bold mb-4 flex items-center gap-2">
+            <h2 className="text-base md:text-lg font-bold mb-3 md:mb-4 flex items-center gap-2">
               <Zap size={18} style={{ color: colors.primary }} />
               快速开始
             </h2>
-            <div className="grid grid-cols-4 gap-4">
+            <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
               {quickStart.map((item) => (
                 <motion.button
                   key={item.id}
@@ -98,13 +98,13 @@ const Dashboard: React.FC = () => {
           
           {/* 快速模板 */}
           <section>
-            <div className="flex items-center justify-between mb-4">
-              <h2 className="text-lg font-bold flex items-center gap-2">
+            <div className="flex items-center justify-between mb-3 md:mb-4">
+              <h2 className="text-base md:text-lg font-bold flex items-center gap-2">
                 <Star size={18} style={{ color: colors.primary }} />
                 快速模板
               </h2>
             </div>
-            <div className="grid grid-cols-4 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
               {quickTemplates.map((template) => (
                 <motion.button
                   key={template.id}
@@ -126,12 +126,12 @@ const Dashboard: React.FC = () => {
           
           {/* 最近项目 */}
           <section>
-            <div className="flex items-center justify-between mb-4">
-              <h2 className="text-lg font-bold flex items-center gap-2">
+            <div className="flex items-center justify-between mb-3 md:mb-4">
+              <h2 className="text-base md:text-lg font-bold flex items-center gap-2">
                 <Clock size={18} style={{ color: colors.primary }} />
                 最近项目
               </h2>
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-1 md:gap-2">
                 <button
                   onClick={() => setViewMode('grid')}
                   className="p-2 rounded-lg transition-all"
@@ -162,7 +162,7 @@ const Dashboard: React.FC = () => {
             </div>
             
             {viewMode === 'grid' ? (
-              <div className="grid grid-cols-4 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
                 {recentProjects.map((project) => (
                   <motion.div
                     key={project.id}
@@ -214,7 +214,7 @@ const Dashboard: React.FC = () => {
                 ))}
               </div>
             ) : (
-              <div className="rounded-2xl overflow-hidden" style={{ backgroundColor: colors.card, border: `1px solid ${colors.border}` }}>
+              <div className="rounded-2xl overflow-hidden responsive-table" style={{ backgroundColor: colors.card, border: `1px solid ${colors.border}` }}>
                 <table className="w-full">
                   <thead>
                     <tr style={{ borderBottom: `1px solid ${colors.border}` }}>
@@ -229,25 +229,25 @@ const Dashboard: React.FC = () => {
                   <tbody>
                     {recentProjects.map((project) => (
                       <tr key={project.id} style={{ borderBottom: `1px solid ${colors.border}` }} className="hover:bg-opacity-50">
-                        <td className="py-4 px-6">
+                        <td className="py-3 md:py-4 px-4 md:px-6" data-label="项目名称">
                           <div className="font-medium" style={{ color: colors.title }}>{project.name}</div>
                         </td>
-                        <td className="py-4 px-6">
+                        <td className="py-3 md:py-4 px-4 md:px-6" data-label="类型">
                           <span className="text-xs px-2 py-1 rounded-full" style={{ backgroundColor: `${colors.primary}15`, color: colors.primary }}>
                             {project.type}
                           </span>
                         </td>
-                        <td className="py-4 px-6 text-sm" style={{ color: colors.body }}>{project.duration}</td>
-                        <td className="py-4 px-6">
+                        <td className="py-3 md:py-4 px-4 md:px-6 text-sm" style={{ color: colors.body }} data-label="时长">{project.duration}</td>
+                        <td className="py-3 md:py-4 px-4 md:px-6" data-label="进度">
                           <div className="flex items-center gap-3">
-                            <div className="w-24 h-2 rounded-full overflow-hidden" style={{ backgroundColor: `${colors.muted}20` }}>
+                            <div className="w-16 md:w-24 h-2 rounded-full overflow-hidden" style={{ backgroundColor: `${colors.muted}20` }}>
                               <div className="h-full" style={{ width: `${project.progress}%`, backgroundColor: colors.primary }} />
                             </div>
                             <span className="text-xs" style={{ color: colors.muted }}>{project.progress}%</span>
                           </div>
                         </td>
-                        <td className="py-4 px-6 text-sm" style={{ color: colors.muted }}>{project.updated}</td>
-                        <td className="py-4 px-6 text-right">
+                        <td className="py-3 md:py-4 px-4 md:px-6 text-sm" style={{ color: colors.muted }} data-label="更新">{project.updated}</td>
+                        <td className="py-3 md:py-4 px-4 md:px-6 text-right" data-label="操作">
                           <button className="text-sm px-3 py-1.5 rounded-lg transition-all hover:opacity-80" style={{ backgroundColor: colors.input, color: colors.body }}>
                             打开
                           </button>

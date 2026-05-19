@@ -15,7 +15,12 @@ import {
   Settings,
   Plus,
   History,
-  ChevronRight
+  ChevronRight,
+  Brain,
+  Crown,
+  TrendingUp,
+  BookOpen,
+  LogIn
 } from 'lucide-react';
 
 const Sidebar: React.FC = () => {
@@ -169,7 +174,62 @@ const Sidebar: React.FC = () => {
         )}
 
         {/* 底部设置 */}
-        <div className="p-3 border-t mt-auto" style={{ borderColor: colors.border }}>
+        <div className="p-3 border-t mt-auto space-y-1" style={{ borderColor: colors.border }}>
+          <button
+            onClick={() => setCurrentModule('membership')}
+            className="w-full px-3 py-2.5 rounded-lg flex items-center gap-3 transition-all hover:opacity-80"
+            style={{ 
+              backgroundColor: currentModule === 'membership' ? `${colors.primary}20` : 'transparent',
+              color: currentModule === 'membership' ? colors.primary : colors.muted
+            }}
+          >
+            <Crown size={18} />
+            {!sidebarCollapsed && <span className="text-sm font-medium">会员中心</span>}
+          </button>
+          <button
+            onClick={() => setCurrentModule('comparison')}
+            className="w-full px-3 py-2.5 rounded-lg flex items-center gap-3 transition-all hover:opacity-80"
+            style={{ 
+              backgroundColor: currentModule === 'comparison' ? `${colors.primary}20` : 'transparent',
+              color: currentModule === 'comparison' ? colors.primary : colors.muted
+            }}
+          >
+            <TrendingUp size={18} />
+            {!sidebarCollapsed && <span className="text-sm font-medium">竞品对比</span>}
+          </button>
+          <button
+            onClick={() => setCurrentModule('onboarding')}
+            className="w-full px-3 py-2.5 rounded-lg flex items-center gap-3 transition-all hover:opacity-80"
+            style={{ 
+              backgroundColor: currentModule === 'onboarding' ? `${colors.primary}20` : 'transparent',
+              color: currentModule === 'onboarding' ? colors.primary : colors.muted
+            }}
+          >
+            <BookOpen size={18} />
+            {!sidebarCollapsed && <span className="text-sm font-medium">新手引导</span>}
+          </button>
+          <button
+            onClick={() => setCurrentModule('login')}
+            className="w-full px-3 py-2.5 rounded-lg flex items-center gap-3 transition-all hover:opacity-80"
+            style={{ 
+              backgroundColor: currentModule === 'login' ? `${colors.primary}20` : 'transparent',
+              color: currentModule === 'login' ? colors.primary : colors.muted
+            }}
+          >
+            <LogIn size={18} />
+            {!sidebarCollapsed && <span className="text-sm font-medium">登录</span>}
+          </button>
+          <button
+            onClick={() => setCurrentModule('ai-config')}
+            className="w-full px-3 py-2.5 rounded-lg flex items-center gap-3 transition-all hover:opacity-80"
+            style={{ 
+              backgroundColor: currentModule === 'ai-config' ? `${colors.primary}20` : 'transparent',
+              color: currentModule === 'ai-config' ? colors.primary : colors.muted
+            }}
+          >
+            <Brain size={18} />
+            {!sidebarCollapsed && <span className="text-sm font-medium">AI 模型</span>}
+          </button>
           <button
             onClick={() => setCurrentModule('settings')}
             className="w-full px-3 py-2.5 rounded-lg flex items-center gap-3 transition-all hover:opacity-80"

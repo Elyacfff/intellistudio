@@ -61,7 +61,7 @@ const Settings: React.FC = () => {
               {t('settings.theme')}
             </h2>
           </div>
-          <div className="grid grid-cols-3 gap-3">
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
             {themeOptions.map((option) => (
               <button
                 key={option.key}
@@ -106,7 +106,7 @@ const Settings: React.FC = () => {
               {t('settings.language')}
             </h2>
           </div>
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             {languageOptions.map((option) => (
               <button
                 key={option.key}

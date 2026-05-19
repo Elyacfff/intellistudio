@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -8,21 +10,12 @@
   box-sizing: border-box;
 }
 
-/* 完美字体系统 - 完美支持汉语和维语
-*/
 :root {
-  /* 优先使用广域字体，确保完美显示 */
-  font-family: 
-    'Segoe UI',
-    'Microsoft YaHei',
-    'PingFang SC',
-    'Noto Sans SC',
-    'Noto Sans Arabic',
-    'Helvetica Neue',
-    Arial,
-    system-ui,
-    sans-serif;
+  --font-zh: 'Noto Sans SC', 'Microsoft YaHei', 'PingFang SC', 'Hiragino Sans GB', sans-serif;
+  --font-ug: 'Noto Sans Arabic', 'Segoe UI', 'Arial', sans-serif;
+  --font-mono: 'Cascadia Code', 'Fira Code', 'JetBrains Mono', 'Consolas', monospace;
   
+  font-family: var(--font-zh);
   font-size: 15px;
   line-height: 1.7;
   -webkit-font-smoothing: antialiased;
@@ -39,20 +32,15 @@ html, body, #root {
 
 body {
   user-select: text;
-  /* 确保文字清晰锐利，防止模糊 */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: geometricPrecision;
-  /* 强制使用字体抗锯齿 */
-  font-smoothing: antialiased;
 }
 
-/* 确保所有文本元素都使用正确的字体 */
-p, div, span, a, button, input, textarea, select, option, h1, h2, h3, h4, h5, h6 {
+p, div, span, a, button, input, textarea, select, option, h1, h2, h3, h4, h5, h6, label, li {
   font-family: inherit;
 }
 
-/* 优化玻璃效果 */
 .glass-card {
   background: rgba(255, 255, 255, 0.08);
   backdrop-filter: blur(20px);
@@ -60,7 +48,6 @@ p, div, span, a, button, input, textarea, select, option, h1, h2, h3, h4, h5, h6
   border: 1px solid rgba(255, 255, 255, 0.12);
 }
 
-/* 优化滚动条样式 */
 ::-webkit-scrollbar {
   width: 10px;
   height: 10px;
@@ -85,7 +72,6 @@ p, div, span, a, button, input, textarea, select, option, h1, h2, h3, h4, h5, h6
   background: rgba(100, 116, 139, 0.9);
 }
 
-/* 拖拽区域 */
 .drag-region {
   -webkit-app-region: drag;
 }
@@ -94,36 +80,40 @@ p, div, span, a, button, input, textarea, select, option, h1, h2, h3, h4, h5, h6
   -webkit-app-region: no-drag;
 }
 
-/* RTL 完美支持 - 专门为维语优化 */
 [dir="rtl"] {
   direction: rtl;
   text-align: right;
-  /* 维语专门字体，优先使用阿拉伯语/维语专用字体 */
-  font-family: 
-    'Noto Sans Arabic',
-    'Segoe UI',
-    'Microsoft YaHei',
-    'PingFang SC',
-    'Noto Sans SC',
-    'Arial',
-    system-ui,
-    sans-serif;
+  font-family: var(--font-ug);
 }
 
-/* 维语文字特殊优化 - 确保连写和正确显示 */
 [dir="rtl"] * {
-  font-feature-settings: 'calt' 1, 'liga' 1;
-  -webkit-font-feature-settings: 'calt' 1, 'liga' 1;
-  text-rendering: optimizeLegibility;
+  font-family: var(--font-ug) !important;
 }
 
-/* 优化文字选择 */
+[dir="rtl"] code,
+[dir="rtl"] pre,
+[dir="rtl"] .font-mono,
+[dir="rtl"] [style*="font-family: monospace"],
+[dir="rtl"] [style*="font-family:monospace"] {
+  font-family: var(--font-mono) !important;
+}
+
+[dir="rtl"] .ltr-force,
+[dir="rtl"] [data-ltr="true"],
+[dir="rtl"] input[type="text"],
+[dir="rtl"] input[type="password"],
+[dir="rtl"] input[type="email"],
+[dir="rtl"] input[type="url"],
+[dir="rtl"] textarea {
+  direction: ltr;
+  text-align: left;
+}
+
 ::selection {
   background: rgba(59, 130, 246, 0.4);
   color: white;
 }
 
-/* 优化输入框和文本域显示 */
 input, textarea, select, option {
   font-family: inherit;
   font-size: inherit;
@@ -131,7 +121,6 @@ input, textarea, select, option {
   color: inherit;
 }
 
-/* 优化动画效果 */
 @keyframes flow {
   0% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
@@ -152,29 +141,24 @@ input, textarea, select, option {
   animation: pulse-glow 2s ease-in-out infinite;
 }
 
-/* 优化按钮和交互元素 */
 button {
   font-family: inherit;
   font-weight: 500;
   transition: all 0.15s ease;
 }
 
-/* 优化文字阴影优化 */
 .text-shadow {
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }
 
-/* 优化标题字体粗细 */
 h1, h2, h3, h4, h5, h6 {
   font-weight: 600;
 }
 
-/* 优化占位符文字 */
 ::placeholder {
   color: rgba(148, 163, 184, 0.7);
 }
 
-/* 确保文字最小可辨识大小 */
 .text-xs {
   font-size: 0.75rem;
   line-height: 1.25;
@@ -190,7 +174,124 @@ h1, h2, h3, h4, h5, h6 {
   line-height: 1.6;
 }
 
-/* 优化表格文字对齐 */
 table {
   font-family: inherit;
+}
+
+/* ========================================
+   移动端响应式适配
+   ======================================== */
+
+@media (max-width: 768px) {
+  .titlebar-controls {
+    display: none !important;
+  }
+  
+  html {
+    font-size: 16px;
+  }
+  
+  .desktop-sidebar {
+    display: none !important;
+  }
+  
+  .mobile-bottom-nav {
+    display: flex !important;
+  }
+}
+
+@media (min-width: 769px) {
+  .mobile-bottom-nav {
+    display: none !important;
+  }
+}
+
+@media (max-width: 480px) {
+  html {
+    font-size: 15px;
+  }
+  
+  .card-compact {
+    padding: 0.75rem !important;
+  }
+  
+  .hide-on-mobile {
+    display: none !important;
+  }
+}
+
+@media (pointer: coarse) {
+  button, 
+  [role="button"],
+  a {
+    min-height: 44px;
+    min-width: 44px;
+  }
+}
+
+@media (max-width: 768px) {
+  .mobile-titlebar {
+    height: 48px !important;
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+  }
+  
+  ::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+  }
+  
+  .content-max-width {
+    max-width: 100% !important;
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+}
+@media (max-width: 640px) {
+  .responsive-table table,
+  .responsive-table thead,
+  .responsive-table tbody,
+  .responsive-table th,
+  .responsive-table td,
+  .responsive-table tr {
+    display: block;
+  }
+  
+  .responsive-table thead tr {
+    display: none;
+  }
+  
+  .responsive-table td {
+    padding: 0.5rem 0.75rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .responsive-table td::before {
+    content: attr(data-label);
+    font-weight: 600;
+    color: #94a3b8;
+    font-size: 0.75rem;
+    margin-right: 0.5rem;
+  }
+}
+
+/* 移动端玻璃效果降级 */
+@media (max-width: 768px) {
+  .glass-card {
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+}
+
+/* 移动端文字可读性增强 */
+@media (max-width: 768px) {
+  .text-xs {
+    font-size: 0.8125rem !important;
+  }
+  
+  .text-sm {
+    font-size: 0.9375rem !important;
+  }
 }
