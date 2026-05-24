@@ -14,7 +14,10 @@ import {
   TrendingUp,
   Star,
   Users,
-  Play
+  Play,
+  Trophy,
+  Target,
+  Award
 } from 'lucide-react';
 
 const Dashboard: React.FC = () => {
@@ -70,6 +73,60 @@ const Dashboard: React.FC = () => {
       <div className="flex-1 overflow-y-auto p-4 md:p-6 pb-20 md:pb-6">
         <div className="content-max-width mx-auto space-y-6 md:space-y-8" style={{ maxWidth: '1400px' }}>
           
+          {/* 统计卡片 */}
+          <section>
+            <h2 className="text-base md:text-lg font-bold mb-3 md:mb-4 flex items-center gap-2">
+              <TrendingUp size={18} style={{ color: colors.primary }} />
+              今日数据
+            </h2>
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
+              <div className="p-4 rounded-2xl" style={{ backgroundColor: colors.card, border: `1px solid ${colors.border}` }}>
+                <div className="flex items-center gap-3">
+                  <div className="w-12 h-12 rounded-xl flex items-center justify-center" style={{ backgroundColor: `${colors.primary}15` }}>
+                    <FileText size={24} style={{ color: colors.primary }} />
+                  </div>
+                  <div>
+                    <p className="text-2xl font-bold" style={{ color: colors.title }}>3</p>
+                    <p className="text-xs" style={{ color: colors.muted }}>剧本生成</p>
+                  </div>
+                </div>
+              </div>
+              <div className="p-4 rounded-2xl" style={{ backgroundColor: colors.card, border: `1px solid ${colors.border}` }}>
+                <div className="flex items-center gap-3">
+                  <div className="w-12 h-12 rounded-xl flex items-center justify-center" style={{ backgroundColor: `${colors.secondary}15` }}>
+                    <Target size={24} style={{ color: colors.secondary }} />
+                  </div>
+                  <div>
+                    <p className="text-2xl font-bold" style={{ color: colors.title }}>12</p>
+                    <p className="text-xs" style={{ color: colors.muted }}>分镜规划</p>
+                  </div>
+                </div>
+              </div>
+              <div className="p-4 rounded-2xl" style={{ backgroundColor: colors.card, border: `1px solid ${colors.border}` }}>
+                <div className="flex items-center gap-3">
+                  <div className="w-12 h-12 rounded-xl flex items-center justify-center" style={{ backgroundColor: `${colors.accent}15` }}>
+                    <Mic size={24} style={{ color: colors.accent }} />
+                  </div>
+                  <div>
+                    <p className="text-2xl font-bold" style={{ color: colors.title }}>5</p>
+                    <p className="text-xs" style={{ color: colors.muted }}>语音合成</p>
+                  </div>
+                </div>
+              </div>
+              <div className="p-4 rounded-2xl" style={{ backgroundColor: colors.card, border: `1px solid ${colors.border}` }}>
+                <div className="flex items-center gap-3">
+                  <div className="w-12 h-12 rounded-xl flex items-center justify-center" style={{ backgroundColor: `${colors.warning}15` }}>
+                    <Trophy size={24} style={{ color: colors.warning }} />
+                  </div>
+                  <div>
+                    <p className="text-2xl font-bold" style={{ color: colors.title }}>45</p>
+                    <p className="text-xs" style={{ color: colors.muted }}>积分余额</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
           {/* 快速开始 */}
           <section>
             <h2 className="text-base md:text-lg font-bold mb-3 md:mb-4 flex items-center gap-2">

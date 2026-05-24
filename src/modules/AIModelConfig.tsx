@@ -180,6 +180,37 @@ const AIModelConfig: React.FC = () => {
           })}
         </div>
 
+        {/* 模型推荐 */}
+        <div className="p-4 rounded-xl" style={{ backgroundColor: colors.input }}>
+          <h3 className="text-sm font-semibold mb-3 flex items-center gap-2" style={{ color: colors.title }}>
+            <Sparkles size={16} style={{ color: colors.primary }} />
+            模型推荐
+          </h3>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+            {[
+              { tab: 'chat', name: 'DeepSeek V3', reason: '性价比最高，中文理解强', icon: '🔥', provider: 'deepseek' },
+              { tab: 'chat', name: 'GPT-4o', reason: '综合能力最强', icon: '🌟', provider: 'openai' },
+              { tab: 'chat', name: 'Qwen Max', reason: '阿里开源，国产之光', icon: '🦊', provider: 'qwen' },
+              { tab: 'image', name: 'DALL·E 3', reason: '质量最高，细节丰富', icon: '🎨', provider: 'openai' },
+              { tab: 'image', name: 'Midjourney', reason: '艺术感强，风格多样', icon: '✨', provider: 'midjourney' },
+              { tab: 'tts', name: 'Edge TTS', reason: '完全免费，中文自然', icon: '💯', provider: 'edge-tts' },
+            ].filter((r) => r.tab === activeTab).map((rec, i) => (
+              <button
+                key={i}
+                onClick={() => handleProviderSelect(rec.provider)}
+                className="p-3 rounded-xl text-left transition-all hover:scale-[1.01]"
+                style={{ backgroundColor: colors.card, border: `1px solid ${colors.border}` }}
+              >
+                <div className="flex items-center gap-2 mb-1">
+                  <span className="text-lg">{rec.icon}</span>
+                  <span className="font-medium text-sm" style={{ color: colors.title }}>{rec.name}</span>
+                </div>
+                <p className="text-xs" style={{ color: colors.muted }}>{rec.reason}</p>
+              </button>
+            ))}
+          </div>
+        </div>
+
         {/* 提供商选择 */}
         <div>
           <h3 className="text-sm font-semibold mb-3 flex items-center gap-2" style={{ color: colors.title }}>

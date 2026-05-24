@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { 
+import {
   Sparkles, 
   Bot, 
   X, 
@@ -23,7 +23,10 @@ import {
   Image as ImageIcon,
   Volume2,
   Cpu,
-  ExternalLink
+  ExternalLink,
+  Copy,
+  Share2,
+  Loader
 } from 'lucide-react';
 import { useAppStore } from '../store/appStore';
 import { themes } from '../hooks/useTheme';
@@ -57,8 +60,38 @@ const IntelliStudio: React.FC = () => {
   const [generatedImageUrl, setGeneratedImageUrl] = useState('');
   const [generatedAudioUrl, setGeneratedAudioUrl] = useState('');
   const [advancedMode, setAdvancedMode] = useState(false);
+  const [copiedSection, setCopiedSection] = useState<string | null>(null);
   
   const logEndRef = useRef<HTMLDivElement>(null);
+
+  const handleCopy = async (text: string, section: string) => {
+    try {
+      await navigator.clipboard.writeText(text);
+      setCopiedSection(section);
+      addToast({ type: 'success', title: '已复制', message: `${section} 已复制到剪贴板` });
+      setTimeout(() => setCopiedSection(null), 2000);
+    } catch {
+      addToast({ type: 'error', title: '复制失败', message: '无法复制到剪贴板' });
+    }
+  };
+
+  const handleExport = () => {
+    const exportData = {
+      title: 'AI 短剧创作',
+      userInput,
+      script: generatedScript,
+      storyboard: generatedStoryboard,
+      exportedAt: new Date().toISOString(),
+    };
+    const blob = new Blob([JSON.stringify(exportData, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `drama-project-${Date.now()}.json`;
+    a.click();
+    URL.revokeObjectURL(url);
+    addToast({ type: 'success', title: '导出成功', message: '项目已导出为 JSON 文件' });
+  };
 
   const addLog = (message: string) => {
     const timestamp = new Date().toLocaleTimeString();
@@ -80,6 +113,12 @@ const IntelliStudio: React.FC = () => {
     { id: 'comedy', icon: '😂', title: '喜剧搞笑', desc: '轻松幽默、段子剧情', prompt: '创作一个喜剧短剧：三个性格迥异的室友的爆笑日常，轻松幽默风格，20集竖屏短剧' },
     { id: 'scifi', icon: '🚀', title: '科幻未来', desc: '未来世界、AI 题材', prompt: '创作一个科幻短剧：2045年，AI 觉醒后与人类共存的世界，30集竖屏短剧' },
     { id: 'horror', icon: '👻', title: '惊悚恐怖', desc: '悬疑惊悚、心理恐惧', prompt: '创作一个惊悚短剧：搬进新家的年轻夫妇发现房子里的诡异现象，心理恐惧层层递进，15集竖屏短剧' },
+    { id: 'family', icon: '👨‍👩‍👧', title: '家庭伦理', desc: '亲情故事、感人泪下', prompt: '创作一个家庭伦理短剧：单亲妈妈独自抚养两个孩子，经历生活艰辛后终于苦尽甘来，30集竖屏短剧' },
+    { id: 'business', icon: '💼', title: '职场商战', desc: '创业奋斗、逆袭人生', prompt: '创作一个职场商战短剧：大学毕业 生进入职场，从实习生一路逆袭成为公司高管，35集竖屏短剧' },
+    { id: 'xianxia', icon: '🏯', title: '民国谍战', desc: '悬疑情报、特工剧情', prompt: '创作一个民国谍战短剧：1930年代的上海滩，表面是歌女的地下党员与军统特务斗智斗勇，25集竖屏短剧' },
+    { id: 'campus', icon: '🎓', title: '校园青春', desc: '青春回忆、美好时光', prompt: '创作一个校园青春短剧：高中时代的青涩爱情与友情，毕业多年后重逢的感动，20集竖屏短剧' },
+    { id: 'medical', icon: '🏥', title: '医疗急救', desc: '医患故事、生命奇迹', prompt: '创作一个医疗急救短剧：急诊室医生在生死边缘拯救生命，医患关系与个人成长并存，25集竖屏短剧' },
+    { id: 'travel', icon: '✈️', title: '旅行奇遇', desc: '异国风情、奇幻冒险', prompt: '创作一个旅行奇遇短剧：背包客在云南旅行时意外卷入神秘事件，遇见真爱并揭开身世之谜，30集竖屏短剧' },
   ];
 
   const buildWorkflow = (): WorkflowNode[] => {
@@ -500,7 +539,7 @@ const IntelliStudio: React.FC = () => {
                   <Lightbulb size={18} style={{ color: colors.primary }} />
                   <span className="font-semibold text-sm">快速模板</span>
                 </div>
-                <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2">
                   {templates.map((template) => (
                     <button
                       key={template.id}
@@ -577,6 +616,26 @@ const IntelliStudio: React.FC = () => {
                 )}
               </div>
 
+              {isProcessing && (
+                <div className="p-3 rounded-xl" style={{ backgroundColor: `${colors.primary}10`, border: `1px solid ${colors.primary}30` }}>
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-xs font-medium" style={{ color: colors.primary }}>
+                      总进度: {completedCount}/{totalCount} 步骤
+                    </span>
+                    <span className="text-xs" style={{ color: colors.muted }}>
+                      预计剩余: {Math.max(1, Math.round((totalCount - completedCount) * 0.5))} 分钟
+                    </span>
+                  </div>
+                  <div className="h-2 rounded-full w-full" style={{ backgroundColor: colors.border }}>
+                    <motion.div 
+                      className="h-full rounded-full"
+                      style={{ backgroundColor: colors.primary, width: `${Math.round((completedCount / totalCount) * 100)}%` }}
+                      transition={{ duration: 0.5 }}
+                    />
+                  </div>
+                </div>
+              )}
+
               <div className="space-y-1.5">
                 {workflowNodes.map((node, i) => (
                   <motion.div
@@ -630,6 +689,89 @@ const IntelliStudio: React.FC = () => {
                   </motion.div>
                 ))}
               </div>
+
+              {generatedScript && (
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  className="p-3 rounded-xl"
+                  style={{ backgroundColor: colors.input }}
+                >
+                  <div className="flex items-center justify-between mb-2">
+                    <div className="flex items-center gap-2">
+                      <FileText size={16} style={{ color: colors.primary }} />
+                      <span className="text-sm font-semibold">AI 生成的剧本</span>
+                      <span className="text-xs px-2 py-0.5 rounded-full" style={{ backgroundColor: `${colors.primary}20`, color: colors.primary }}>
+                        {generatedScript.length} 字
+                      </span>
+                    </div>
+                    <button
+                      onClick={() => handleCopy(generatedScript, '剧本')}
+                      className="flex items-center gap-1 px-2 py-1 rounded-lg text-xs transition-all hover:opacity-80"
+                      style={{ backgroundColor: `${colors.primary}15`, color: colors.primary }}
+                    >
+                      {copiedSection === '剧本' ? <CheckCircle2 size={12} /> : <Copy size={12} />}
+                      {copiedSection === '剧本' ? '已复制' : '复制剧本'}
+                    </button>
+                  </div>
+                  <div className="p-3 rounded-lg max-h-48 overflow-auto" style={{ backgroundColor: colors.card }}>
+                    <pre className="text-xs whitespace-pre-wrap leading-relaxed" style={{ color: colors.body }}>{generatedScript}</pre>
+                  </div>
+                </motion.div>
+              )}
+
+              {generatedStoryboard && (
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  className="p-3 rounded-xl"
+                  style={{ backgroundColor: colors.input }}
+                >
+                  <div className="flex items-center justify-between mb-2">
+                    <div className="flex items-center gap-2">
+                      <Video size={16} style={{ color: colors.primary }} />
+                      <span className="text-sm font-semibold">AI 生成的分镜</span>
+                      <span className="text-xs px-2 py-0.5 rounded-full" style={{ backgroundColor: `${colors.primary}20`, color: colors.primary }}>
+                        {generatedStoryboard.length} 字
+                      </span>
+                    </div>
+                    <button
+                      onClick={() => handleCopy(generatedStoryboard, '分镜')}
+                      className="flex items-center gap-1 px-2 py-1 rounded-lg text-xs transition-all hover:opacity-80"
+                      style={{ backgroundColor: `${colors.primary}15`, color: colors.primary }}
+                    >
+                      {copiedSection === '分镜' ? <CheckCircle2 size={12} /> : <Copy size={12} />}
+                      {copiedSection === '分镜' ? '已复制' : '复制分镜'}
+                    </button>
+                  </div>
+                  <div className="p-3 rounded-lg max-h-48 overflow-auto" style={{ backgroundColor: colors.card }}>
+                    <pre className="text-xs whitespace-pre-wrap leading-relaxed" style={{ color: colors.body }}>{generatedStoryboard}</pre>
+                  </div>
+                </motion.div>
+              )}
+
+              {allCompleted && (
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="flex gap-2"
+                >
+                  <button
+                    onClick={handleExport}
+                    className="flex-1 py-3 rounded-xl font-semibold text-sm flex items-center justify-center gap-2 transition-all hover:scale-[1.01]"
+                    style={{ backgroundColor: colors.success, color: '#fff' }}
+                  >
+                    <Download size={16} /> 导出项目
+                  </button>
+                  <button
+                    onClick={resetWorkflow}
+                    className="flex-1 py-3 rounded-xl font-semibold text-sm flex items-center justify-center gap-2 transition-all hover:scale-[1.01]"
+                    style={{ backgroundColor: colors.primary, color: '#fff' }}
+                  >
+                    <Sparkles size={16} /> 继续创作
+                  </button>
+                </motion.div>
+              )}
 
               {generatedImageUrl && (
                 <motion.div
